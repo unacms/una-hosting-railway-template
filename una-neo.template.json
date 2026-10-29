@@ -1,0 +1,96 @@
+{
+  "code": "una-neo-template-1",
+  "repo": "https://github.com/unacms/una-hosting-pulumi",
+  "branch": "main",
+  "services": {
+    "db": {
+      "image": "mariadb:13.0.2",
+      "default": true,
+      "public": false,
+      "scale": {
+        "us-west": 1
+      },
+      "variables": [
+        "unaMysqlRootPassword",
+        "unaDbPwd"
+      ]
+    },
+    "una": {
+      "image": "unaio/una:latest",
+      "root": "/railway/services/una",
+      "default": true,
+      "public": true,
+      "requires": [
+        "db"
+      ],
+      "scale": {
+        "us-west": 1
+      },
+      "variables": [
+        "unaSiteEmail",
+        "unaAdminEmail"
+      ]
+    },
+    "neo": {
+      "image": "unaio/neo:latest",
+      "root": "/railway/services/neo",
+      "default": true,
+      "public": true,
+      "scale": {
+        "us-west": 1
+      },
+      "variables": [
+        "neoUnaApiKey",
+        "neoUnaUrl",
+        "logo",
+        "splash_text_component",
+        "global_css_component"
+      ]
+    },
+    "soketi": {
+      "image": "quay.io/soketi/soketi:e446df8e3e06b8430d75cf58555bc409bf240a4e-16-alpine",
+      "default": true,
+      "public": true,
+      "scale": {
+        "us-west": 1
+      },
+      "variables": [
+        "soketi_secret"
+      ]
+    },
+    "phpmyadmin": {
+      "image": "phpmyadmin:5.2.3",
+      "root": "/railway/services/phpmyadmin",
+      "default": false,
+      "public": true,
+      "requires": [
+        "db"
+      ],
+      "scale": {
+        "us-west": 1
+      },
+      "variables": []
+    },
+    "jot": {
+      "image": "unaio/jot-server:latest",
+      "root": "/railway/services/jot",
+      "default": false,
+      "public": true,
+      "scale": {
+        "us-west": 1
+      },
+      "variables": [
+        "jotJwtSecret"
+      ]
+    },
+    "mail": {
+      "image": "namshi/smtp",
+      "default": false,
+      "public": false,
+      "scale": {
+        "us-west": 1
+      },
+      "variables": []
+    }
+  }
+}
