@@ -44,6 +44,7 @@
         "neoUnaUrl",
         "logo",
         "splash_text_component",
+        "join_text_component",
         "global_css_component"
       ]
     },

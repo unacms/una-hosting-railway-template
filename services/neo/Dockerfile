@@ -5,7 +5,7 @@
 ARG NEO_IMAGE_TAG=latest
 FROM unaio/neo:${NEO_IMAGE_TAG}
 
-COPY scripts/railway-entrypoint.sh /usr/local/bin/railway-entrypoint.sh
+COPY scripts/railway-entrypoint.sh scripts/write-customization.js /usr/local/bin/
 RUN set -eux; \
     chmod 0755 /usr/local/bin/railway-entrypoint.sh; \
     ln -sf "$(command -v tini)" /usr/local/bin/tini

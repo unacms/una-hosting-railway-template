@@ -8,7 +8,7 @@ The default services are `db`, `una`, and `neo`. The marketplace deploy includes
 
 `una` reaches MariaDB on the private network and keeps its files on a `/var/www` volume. Each service has its own domain, so UNA is not mounted under a `/una` path.
 
-You will be asked for `unaSiteEmail`, `unaAdminEmail`, `unaDbPwd`, `unaMysqlRootPassword`, `neoUnaApiKey`, `neoUnaUrl`, `logo`, `splash_text_component`, `global_css_component`, and `soketi_secret`. `logo`, `splash_text_component`, and `global_css_component` belong to `neo`.
+You will be asked for `unaSiteEmail`, `unaAdminEmail`, `unaDbPwd`, `unaMysqlRootPassword`, `neoUnaApiKey`, `neoUnaUrl`, `logo`, `splash_text_component`, `join_text_component`, `global_css_component`, and `soketi_secret`. `logo`, `splash_text_component`, `join_text_component`, and `global_css_component` belong to `neo`.
 
 ## Why Deploy UNA/NEO on Railway
 
