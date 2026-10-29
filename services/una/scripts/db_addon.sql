@@ -1,4 +1,4 @@
--- Same file as ansible/templates/cnf/db_addon.sql, mounted at /tmp/addon.sql.
+-- Based on ansible/templates/cnf/db_addon.sql, mounted at /tmp/addon.sql.
 -- The boot script fills the {{ }} tokens, then the image installer appends
 -- this file to install/sql/addon.sql and executes it.
 
@@ -17,6 +17,10 @@ UPDATE `sys_options` SET `value` = '{{ proto }}://{{ host }}' WHERE `name` = 'sy
 UPDATE `sys_options` SET `value` = 'main' WHERE `name` = 'sys_sockets_app_id';
 UPDATE `sys_options` SET `value` = 'main' WHERE `name` = 'sys_sockets_key';
 UPDATE `sys_options` SET `value` = '{{ soketi_secret }}' WHERE `name` = 'sys_sockets_secret';
+
+-- Messenger talks to jot. URL and JWT come from UNA_JOT_SERVER_URL / UNA_JOT_JWT_SECRET.
+UPDATE `sys_options` SET `value` = '{{ jot_server_url }}' WHERE `name` = 'bx_messenger_server_url';
+UPDATE `sys_options` SET `value` = '{{ jot_jwt_secret }}' WHERE `name` = 'bx_messenger_jot_server_jwt';
 
 DELETE FROM `sys_api_keys` WHERE `key` = '{{ neoUnaApiKey }}';
 INSERT IGNORE INTO `sys_api_keys` (`title`, `key`, `order`) VALUES ('NEO', '{{ neoUnaApiKey }}', 1);
