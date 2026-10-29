@@ -30,6 +30,43 @@ if (/^\s*start:/m.test(source))
 
 // Catalog roots are paths in the public template repo. That repo's root is
 // this railway/ directory, so /services/una is railway/services/una here.
+function envKeys(source, serviceName) {
+    const start = source.search(new RegExp(`service\\("${serviceName}"`));
+    if (start < 0)
+        return [];
+    const next = source.slice(start + 1).search(/\bservice\("/);
+    const region = source.slice(start, next < 0 ? source.length : start + 1 + next);
+    const envAt = region.search(/\benv\s*:/);
+    if (envAt < 0)
+        return [];
+    const brace = region.indexOf("{", envAt);
+    let depth = 0;
+    let end = brace;
+    for (; end < region.length; end++) {
+        if (region[end] === "{")
+            depth++;
+        else if (region[end] === "}") {
+            depth--;
+            if (depth === 0) {
+                end++;
+                break;
+            }
+        }
+    }
+    const body = region.slice(brace + 1, end - 1);
+    const keys = [];
+    depth = 0;
+    for (const line of body.split("\n")) {
+        if (depth === 0) {
+            const match = line.match(/^\s*([A-Za-z_][A-Za-z0-9_]*)\s*:/);
+            if (match)
+                keys.push(match[1]);
+        }
+        depth += (line.match(/\{/g) || []).length - (line.match(/\}/g) || []).length;
+    }
+    return keys;
+}
+
 function serviceFile(rootDir, ...parts) {
     const rel = String(rootDir || "").replace(/^\//, "");
     return path.join(__dirname, rel, ...parts);
@@ -89,9 +126,17 @@ for (const [name, spec] of Object.entries(services || {})) {
     }
     if (!Array.isArray(spec.variables))
         fail(`${name} variables must be an array`);
-    for (const variable of spec.variables || []) {
-        if (!new RegExp(`\\b${variable}\\b`).test(source))
-            fail(`IaC is missing variable ${variable} for ${name}`);
+    const env = envKeys(source, name);
+    const listed = spec.variables || [];
+    if (env.join("\n") !== listed.join("\n")) {
+        const missing = env.filter(key => !listed.includes(key));
+        const extra = listed.filter(key => !env.includes(key));
+        const details = [];
+        if (missing.length)
+            details.push(`missing ${missing.join(", ")}`);
+        if (extra.length)
+            details.push(`extra ${extra.join(", ")}`);
+        fail(`${name} variables do not match the IaC env keys${details.length ? `: ${details.join("; ")}` : ""}`);
     }
     const note = documented.get(name);
     if (!note) {
