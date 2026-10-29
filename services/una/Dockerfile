@@ -11,7 +11,8 @@ RUN set -eux; \
     a2enmod mpm_prefork; \
     test "$(ls /etc/apache2/mods-enabled/ | grep -c '^mpm_.*\.load$')" = "1"
 
-COPY scripts/railway-entrypoint.sh /usr/local/bin/railway-entrypoint.sh
+COPY scripts/railway-entrypoint.sh scripts/write-addon.php /usr/local/bin/
+COPY scripts/db_addon.sql /usr/local/share/una/db_addon.sql
 RUN chmod 0755 /usr/local/bin/railway-entrypoint.sh
 
 EXPOSE 80

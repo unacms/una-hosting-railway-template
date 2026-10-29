@@ -4,11 +4,11 @@ This catalog is the UNA/NEO service list the worker filters and scales. The work
 
 `db`, `soketi`, and `mail` are registry images. `una`, `neo`, `phpmyadmin`, and `jot` are built from the public repo [unacms/una-hosting-railway-template](https://github.com/unacms/una-hosting-railway-template). That repo's root is this [railway/](.) directory, so each service root is `/services/<name>` ([services/](services/) with a `Dockerfile` and `scripts/railway-entrypoint.sh`; jot also has `scripts/configure-config.js`). The Dockerfile `FROM` line is the upstream image. The entrypoint is the boot logic that used to be a start command. Railway builds that directory; there is no start command in [.railway/railway.ts](../.railway/railway.ts).
 
-Service names in the published template must match the keys in [una-neo.template.json](una-neo.template.json): `db`, `una`, `neo`, `soketi`, `phpmyadmin`, `jot`, `mail`. `una` keeps `db`. AWS and DigitalOcean keep a separate `una-api` container so UNA can run under `/una` on one domain. This template has a single `una` service because Railway assigns each service its own domain. Variable names that should receive job values must use the same names as the job fields (`unaSiteEmail`, `unaAdminEmail`, `unaDbPwd`, `unaMysqlRootPassword`, `neoUnaApiKey`, `neoUnaUrl`, `logo`, `splash_text_component`, `global_css_component`, `soketi_secret`). `logo`, `splash_text_component`, and `global_css_component` are on `neo`. Leave Railway references such as `${{db.MYSQL_URL}}` as references; the worker will not overwrite them.
+Service names in the published template must match the keys in [una-neo.template.json](una-neo.template.json): `db`, `una`, `neo`, `soketi`, `phpmyadmin`, `jot`, `mail`. `una` keeps `db`. AWS and DigitalOcean keep a separate `una-api` container so UNA can run under `/una` on one domain. This template has a single `una` service because Railway assigns each service its own domain. Variable names that should receive job values must use the same names as the job fields (`unaSiteEmail`, `unaAdminEmail`, `unaDbPwd`, `unaMysqlRootPassword`, `neoUnaApiKey`, `neoUnaUrl`, `logo`, `splash_text_component`, `join_text_component`, `global_css_component`, `soketi_secret`). `logo`, `splash_text_component`, `join_text_component`, and `global_css_component` are on `neo`. The neo entrypoint writes them into the customization files compose bind-mounts. Leave Railway references such as `${{db.MYSQL_URL}}` as references; the worker will not overwrite them.
 
 `image` in the catalog is the registry image for `db`, `soketi`, and `mail`, and the `FROM` image for services that set `root`. `phpmyadmin:5.2.3` is the same image as `phpmyadmin:5.2.3-apache`. `code` is the published template code. The deploy URL is `https://railway.com/deploy/una-template`.
 
-The canonical project is `una-template` (`e58cdc3a-7023-4a2e-9de2-ae75cf009f95`) in the Yasko Studio workspace. [.railway/railway.ts](../.railway/railway.ts) is the source of truth for images, build directories, variables, volumes, replicas, and image auto-update. Do not put project ids or generated `*.up.railway.app` hostnames in that file.
+The canonical project is `una-template` in the Yasko Studio workspace. [.railway/railway.ts](../.railway/railway.ts) is the source of truth for images, build directories, variables, volumes, replicas, and image auto-update. Do not put project ids or generated `*.up.railway.app` hostnames in that file.
 
 `npm run check:railway` fails when the catalog's service names, images, roots, variable names, `default`, `public`, or `us-west` scale drift from the IaC file or from a service Dockerfile.
 
@@ -29,7 +29,7 @@ Apply at [railway.com/partners](https://railway.com/partners) if this template s
 Link the canonical project, then plan and apply:
 
 ```bash
-railway link --project e58cdc3a-7023-4a2e-9de2-ae75cf009f95 --environment production --workspace "Yasko Studio"
+railway link --project 16a87918-7982-4736-ba41-f1cf2d7a6666 --environment production --workspace "Yasko Studio"
 railway config plan
 railway config apply
 ```
@@ -39,8 +39,8 @@ Edit registry images, variables, replicas, volumes, and `autoUpdates` only in [.
 `railway templates create` makes a new draft, and there is no API to overwrite an existing template's service config. Run it only when `code` in [una-neo.template.json](una-neo.template.json) is empty, or when a service, variable, volume, or service source is added or removed and must ship as a new template. Publish that draft and replace `code` only after the worker should select the new template. Unpublish the previous template after that. Push `main` on [unacms/una-hosting-railway-template](https://github.com/unacms/una-hosting-railway-template) before apply, because Railway clones that branch to build `una`, `neo`, `phpmyadmin`, and `jot`.
 
 ```bash
-railway templates create --project e58cdc3a-7023-4a2e-9de2-ae75cf009f95 --environment production --json
-railway templates publish <id> --category CMS --description "UNA/NEO community site and API" --readme-file railway/TEMPLATE.md --demo-project e58cdc3a-7023-4a2e-9de2-ae75cf009f95 --json
+railway templates create --project 16a87918-7982-4736-ba41-f1cf2d7a6666 --environment production --json
+railway templates publish <id> --category CMS --description "UNA/NEO community site and API" --readme-file railway/TEMPLATE.md --demo-project 16a87918-7982-4736-ba41-f1cf2d7a6666 --json
 ```
 
 The marketplace description must be at least 25 characters. The public readme is [TEMPLATE.md](TEMPLATE.md), not this file. Public domains for `una` (port 80), `neo` (port 3000), and `phpmyadmin` (port 80) are created with `railway domain` after apply. Generated domains are not written into the IaC file. Add them before `templates create` so the snapshot asks deployers for a public domain.

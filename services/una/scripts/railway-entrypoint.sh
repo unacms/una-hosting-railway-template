@@ -6,8 +6,9 @@
 #    create una.zip and the container exits. Not recursive: the tree can be large.
 # 3. After Studio install, UNA serves a blocker until install/ is removed.
 #    Only remove it when the installed config is present.
-# 4. Hand off to the image entrypoint.
-# Do not apply addon SQL or insert API keys from this script.
+# 4. Render db_addon.sql to /tmp/addon.sql. The image entrypoint appends that
+#    file to install/sql/addon.sql and the installer executes it.
+# 5. Hand off to the image entrypoint.
 set -Eeuo pipefail
 
 log() { echo "[railway-entrypoint] $*" >&2; }
@@ -28,5 +29,7 @@ fi
 if [ -f /var/www/inc/header.inc.php ]; then
     rm -rf /var/www/install
 fi
+
+php /usr/local/bin/write-addon.php
 
 exec docker-entrypoint.sh "$@"
