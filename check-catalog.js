@@ -28,9 +28,15 @@ if (typeof catalog.branch !== "string" || !source.includes(`branch: "${catalog.b
 if (/^\s*start:/m.test(source))
     fail("boot logic belongs in railway/services/*/scripts, not a start command");
 
-function dockerfileBase(rootDir) {
+// Catalog roots are paths in the public template repo. That repo's root is
+// this railway/ directory, so /services/una is railway/services/una here.
+function serviceFile(rootDir, ...parts) {
     const rel = String(rootDir || "").replace(/^\//, "");
-    const file = path.join(root, rel, "Dockerfile");
+    return path.join(__dirname, rel, ...parts);
+}
+
+function dockerfileBase(rootDir) {
+    const file = serviceFile(rootDir, "Dockerfile");
     let text;
     try {
         text = fs.readFileSync(file, "utf8");
@@ -72,7 +78,7 @@ for (const [name, spec] of Object.entries(services || {})) {
     if (spec.root) {
         if (!source.includes(`"${spec.root}"`))
             fail(`IaC is missing rootDirectory ${spec.root} for ${name}`);
-        const entrypoint = path.join(root, String(spec.root).replace(/^\//, ""), "scripts", "railway-entrypoint.sh");
+        const entrypoint = serviceFile(spec.root, "scripts", "railway-entrypoint.sh");
         if (!fs.existsSync(entrypoint))
             fail(`${name} is missing scripts/railway-entrypoint.sh`);
         const base = dockerfileBase(spec.root);

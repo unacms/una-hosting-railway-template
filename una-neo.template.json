@@ -1,6 +1,6 @@
 {
   "code": "una-neo-template-1",
-  "repo": "https://github.com/unacms/una-hosting-pulumi",
+  "repo": "https://github.com/unacms/una-hosting-railway-template",
   "branch": "main",
   "services": {
     "db": {
@@ -17,7 +17,7 @@
     },
     "una": {
       "image": "unaio/una:latest",
-      "root": "/railway/services/una",
+      "root": "/services/una",
       "default": true,
       "public": true,
       "requires": [
@@ -33,7 +33,7 @@
     },
     "neo": {
       "image": "unaio/neo:latest",
-      "root": "/railway/services/neo",
+      "root": "/services/neo",
       "default": true,
       "public": true,
       "scale": {
@@ -60,7 +60,7 @@
     },
     "phpmyadmin": {
       "image": "phpmyadmin:5.2.3",
-      "root": "/railway/services/phpmyadmin",
+      "root": "/services/phpmyadmin",
       "default": false,
       "public": true,
       "requires": [
@@ -73,7 +73,7 @@
     },
     "jot": {
       "image": "unaio/jot-server:latest",
-      "root": "/railway/services/jot",
+      "root": "/services/jot",
       "default": false,
       "public": true,
       "scale": {
