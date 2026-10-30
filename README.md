@@ -40,7 +40,7 @@ Edit registry images, variables, replicas, volumes, and `autoUpdates` only in [.
 
 ```bash
 railway templates create --project e58cdc3a-7023-4a2e-9de2-ae75cf009f95 --environment production --json
-railway templates publish <id> --category CMS --description "UNA/NEO community site and API" --readme-file railway/TEMPLATE.md --demo-project e58cdc3a-7023-4a2e-9de2-ae75cf009f95 --json
+railway templates publish <id> --category CMS --description "UNA/NEO community site and API" --readme-file railway/TEMPLATE.md --demo-project e58cdc3a-7023-4a2e-9de2-ae75cf009f95 --image https://unacms.com/static/favicon.svg --json
 ```
 
 The marketplace description must be at least 25 characters. The public readme is [TEMPLATE.md](TEMPLATE.md), not this file. Public domains for `una` (port 80), `neo` (port 3000), and `phpmyadmin` (port 80) are created with `railway domain` after apply. Generated domains are not written into the IaC file. Add them before `templates create` so the snapshot asks deployers for a public domain.
