@@ -10,70 +10,11 @@
       "scale": {
         "us-west": 1
       },
-      "variables": [                
+      "variables": [
         "MARIADB_DATABASE",
         "MARIADB_USER",
         "MARIADB_PASSWORD",
         "MARIADB_ROOT_PASSWORD"
-      ]
-    },
-    "una": {
-      "image": "unaio/una:latest",
-      "root": "/services/una",
-      "default": true,
-      "public": true,
-      "requires": [
-        "db"
-      ],
-      "scale": {
-        "us-west": 1
-      },
-      "variables": [
-        "PORT",
-        "UNA_DB_HOST",
-        "UNA_DB_PORT",
-        "UNA_DB_USER",
-        "UNA_DB_PWD",
-        "UNA_DB_NAME",
-        "UNA_SITE_EMAIL",
-        "UNA_ADMIN_EMAIL",
-        "UNA_SITE_TITLE",
-        "UNA_ADMIN_PWD",
-        "UNA_KEY",
-        "UNA_SECRET",
-        "UNA_HTTP_HOST",
-        "HTTPS",
-        "UNA_ZIP_DOWNLOAD_URL",
-        "UNA_ZIP_FOLDER",
-        "UNA_JOT_SERVER_URL",
-        "UNA_JOT_JWT_SECRET",
-        "UNA_SMTP_HOST",
-        "UNA_SMTP_PORT",
-        "NEO_UNA_API_KEY",
-        "UNA_SOCKETS_URL",
-        "SOKETI_SECRET"
-      ]
-    },
-    "neo": {
-      "image": "unaio/neo:latest",
-      "root": "/services/neo",
-      "default": true,
-      "public": true,
-      "scale": {
-        "us-west": 1
-      },
-      "variables": [
-        "PORT",
-        "logo",
-        "splash_text_component",
-        "join_text_component",
-        "global_css_component",
-        "UNA_API_KEY",
-        "UNA_URL",
-        "NEXT_PUBLIC_UNA_URL",
-        "NEO_IMAGE_HOST",
-        "NEXT_PUBLIC_SOCKETS_HOST",
-        "NEXT_PUBLIC_SOCKETS_KEY"
       ]
     },
     "soketi": {
@@ -90,6 +31,65 @@
         "PORT",
         "SOKETI_HOST",
         "SOKETI_DEFAULT_APP_ENABLE_CLIENT_MESSAGES"
+      ]
+    },
+    "una": {
+      "image": "unaio/una:latest",
+      "root": "/services/una",
+      "default": true,
+      "public": true,
+      "requires": [
+        "db"
+      ],
+      "scale": {
+        "us-west": 1
+      },
+      "variables": [
+        "UNA_SITE_EMAIL",
+        "UNA_ADMIN_EMAIL",
+        "UNA_SITE_TITLE",
+        "UNA_ADMIN_PWD",
+        "UNA_KEY",
+        "UNA_SECRET",
+        "UNA_ZIP_DOWNLOAD_URL",
+        "UNA_ZIP_FOLDER",
+        "UNA_HTTP_HOST",
+        "HTTPS",
+        "PORT",
+        "UNA_DB_HOST",
+        "UNA_DB_PORT",
+        "UNA_DB_USER",
+        "UNA_DB_PWD",
+        "UNA_DB_NAME",
+        "UNA_JOT_SERVER_URL",
+        "UNA_JOT_JWT_SECRET",
+        "UNA_SMTP_HOST",
+        "UNA_SMTP_PORT",
+        "UNA_SOCKETS_URL",
+        "SOKETI_SECRET",
+        "NEO_UNA_API_KEY"
+      ]
+    },
+    "neo": {
+      "image": "unaio/neo:latest",
+      "root": "/services/neo",
+      "default": true,
+      "public": true,
+      "scale": {
+        "us-west": 1
+      },
+      "variables": [
+        "logo",
+        "splash_text_component",
+        "join_text_component",
+        "global_css_component",
+        "PORT",
+        "UNA_API_KEY",
+        "UNA_URL",
+        "NEXT_PUBLIC_UNA_URL",
+        "NEO_IMAGE_HOST",
+        "NEXT_PUBLIC_SOCKETS_HOST",
+        "NEXT_PUBLIC_SOCKETS_KEY"
       ]
     },
     "phpmyadmin": {
