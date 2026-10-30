@@ -12,8 +12,12 @@ $replace = [
     "{{ proto }}://{{ host }}" => getenv("UNA_SOCKETS_URL") ?: "",
     "{{ soketi_secret }}" => getenv("SOKETI_SECRET") ?: "",
     "{{ neoUnaApiKey }}" => getenv("NEO_UNA_API_KEY") ?: "",
+
     "{{ jot_server_url }}" => getenv("UNA_JOT_SERVER_URL") ?: "",
     "{{ jot_jwt_secret }}" => getenv("UNA_JOT_JWT_SECRET") ?: "",
+    
+    "{{ smtp_host }}" => getenv("UNA_SMTP_HOST") ?: "",
+    "{{ smtp_port }}" => getenv("UNA_SMTP_PORT") ?: "",
 ];
 foreach ($replace as $token => $value) {
     $replace[$token] = str_replace("'", "''", $value);

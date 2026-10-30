@@ -10,13 +10,11 @@
       "scale": {
         "us-west": 1
       },
-      "variables": [
-        "unaMysqlRootPassword",
-        "unaDbPwd",
+      "variables": [                
         "MARIADB_DATABASE",
         "MARIADB_USER",
-        "MARIADB_ROOT_PASSWORD",
-        "MARIADB_PASSWORD"
+        "MARIADB_PASSWORD",
+        "MARIADB_ROOT_PASSWORD"
       ]
     },
     "una": {
@@ -31,8 +29,6 @@
         "us-west": 1
       },
       "variables": [
-        "unaSiteEmail",
-        "unaAdminEmail",
         "PORT",
         "UNA_DB_HOST",
         "UNA_DB_PORT",
@@ -68,9 +64,6 @@
       },
       "variables": [
         "PORT",
-        "neoUnaApiKey",
-        "neoUnaUrl",
-        "soketi_secret",
         "logo",
         "splash_text_component",
         "join_text_component",
@@ -91,7 +84,6 @@
         "us-west": 1
       },
       "variables": [
-        "soketi_secret",
         "SOKETI_DEFAULT_APP_ID",
         "SOKETI_DEFAULT_APP_KEY",
         "SOKETI_DEFAULT_APP_SECRET",
@@ -127,7 +119,6 @@
         "us-west": 1
       },
       "variables": [
-        "jotJwtSecret",
         "JOT_JWT_SECRET",
         "PORT",
         "RAILWAY_RUN_UID"

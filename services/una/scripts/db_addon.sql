@@ -22,5 +22,11 @@ UPDATE `sys_options` SET `value` = '{{ soketi_secret }}' WHERE `name` = 'sys_soc
 UPDATE `sys_options` SET `value` = '{{ jot_server_url }}' WHERE `name` = 'bx_messenger_server_url';
 UPDATE `sys_options` SET `value` = '{{ jot_jwt_secret }}' WHERE `name` = 'bx_messenger_jot_server_jwt';
 
+-- SMTP Mailer
+UPDATE `sys_options` SET `value` = 'on' WHERE `name` = 'bx_smtp_on';
+UPDATE `sys_options` SET `value` = '{{ smtp_host }}' WHERE `name` = 'bx_smtp_host';
+UPDATE `sys_options` SET `value` = '{{ smtp_port }}' WHERE `name` = 'bx_smtp_port';
+
+
 DELETE FROM `sys_api_keys` WHERE `key` = '{{ neoUnaApiKey }}';
 INSERT IGNORE INTO `sys_api_keys` (`title`, `key`, `order`) VALUES ('NEO', '{{ neoUnaApiKey }}', 1);
